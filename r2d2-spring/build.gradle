@@ -1,0 +1,33 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.geomenum'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+dependencies {
+    compile 'com.geomenum:r2d2-core:1.0'
+    compile 'org.slf4j:slf4j-api:1.7.6' // todo : inherit dependency from core
+    compile 'org.springframework:spring-context:4.0.1.RELEASE'
+
+    //~ Testing ========================================================================================================
+    testCompile 'com.geomenum:r2d2-core:1.0:test'
+    testCompile 'org.testng:testng:6.8.7'
+    testCompile 'org.springframework:spring-test:4.0.0.RELEASE'
+}
+
+test {
+    useTestNG()
+}
+
+//~ Artifact publication ===============================================================================================
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+    }
+}
