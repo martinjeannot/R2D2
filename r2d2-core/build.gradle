@@ -1,0 +1,48 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'com.geomenum'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.6'
+
+    testCompile 'org.testng:testng:6.8.7'
+}
+
+test {
+    useTestNG()
+}
+
+//~ Artifact publication ===============================================================================================
+
+task testJar(type: Jar) {
+    classifier = 'test'
+    from sourceSets.test.output
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives testJar
+    archives sourcesJar
+    archives javadocJar
+}
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+    }
+}
